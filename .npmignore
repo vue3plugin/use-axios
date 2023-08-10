@@ -1,0 +1,12 @@
+.vscode
+demo/
+etc/
+scripts/
+node_modules/
+src/
+.gitignore
+.gitattributes
+pnpm-lock.yaml
+rollup.config.ts
+tsconfig.json
+tsconfig.types.json

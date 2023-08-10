@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+      "target": "ESNext", 
+      "module": "ESNext",
+      "lib": [
+        "ESNext",
+        "DOM",
+        "DOM.Iterable",
+      ], 
+      "moduleResolution": "Bundler", 
+      "sourceMap": true,  
+      "skipLibCheck": true,
+      "inlineSources": false,
+      "allowUnreachableCode": false,
+      "allowUnusedLabels": false,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
+      "removeComments": true,
+      "alwaysStrict": true,
+      "noImplicitUseStrict": false,
+      "strictBindCallApply": true,
+      "strictFunctionTypes": true,
+      "strictPropertyInitialization": false,
+      "strictNullChecks": false,
+      "forceConsistentCasingInFileNames": true,
+      "checkJs": false,
+      "allowJs": true,
+      "esModuleInterop": true,
+      "importHelpers": false
+  },
+  "include": ["src/**/*", "env.d.ts",],
+  "exclude": ["node_modules/**/*"]
+}
