@@ -27,7 +27,8 @@
     "一个橙子pro",
     "vue",
     "vite",
-    "typescript"
+    "typescript",
+    "axios"
   ],
   "repository": {
     "type": "git",
