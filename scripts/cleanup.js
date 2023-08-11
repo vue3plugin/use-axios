@@ -3,4 +3,4 @@ import fs from 'node:fs'
 
 fs.rmSync('dist/types', { recursive: true })
 
-fs.renameSync('dist/npm-pkg-by-rollup.d.ts', 'dist/index.d.ts')
+fs.renameSync('dist/use-axios.d.ts', 'dist/index.d.ts')
