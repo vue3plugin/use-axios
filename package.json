@@ -1,5 +1,5 @@
 {
-  "name": "@v3p/npm-pkg-by-vite",
+  "name": "@v3p/use-axios",
   "version": "1.0.2",
   "description": "基于vite的npm包模板",
   "type": "module",
@@ -17,8 +17,11 @@
     }
   },
   "scripts": {
+    "dev:demo": "cd example && vite",
+    "build:demo": "cd example && vite build",
     "build": "vite build",
-    "build-types": "vue-tsc -p ./tsconfig.types.json && api-extractor run -c api-extractor.json && node scripts/cleanup.js"
+    "build-types": "vue-tsc -p ./tsconfig.types.json && api-extractor run -c api-extractor.json && node scripts/cleanup.js",
+    "build-all": "npm run build && npm run build-types"
   },
   "keywords": [
     "一个橙子pro",
@@ -38,8 +41,11 @@
   "homepage": "https://github.com/vue3plugin/npm-pkg-by-rollup#readme",
   "devDependencies": {
     "@microsoft/api-extractor": "^7.36.4",
+    "@tsconfig/node18": "^18.2.0",
     "@types/node": "^20.4.8",
     "@vitejs/plugin-vue": "^4.2.3",
+    "axios": "^1.4.0",
+    "howtools": "^0.2.4",
     "tslib": "^2.6.1",
     "typescript": "^5.1.6",
     "vite": "^4.4.9",
