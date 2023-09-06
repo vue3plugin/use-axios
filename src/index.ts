@@ -49,7 +49,7 @@ export function createAxios(config: UseAxiosInstance) {
         const edata = ref() // axios 错误响应数据
 
         // 不是节流的方式
-        const preRequest = ({ params: p, data: d, path: pv }: UseAxiosRequestConfig): Promise<AxiosResponse> => {
+        const preRequest = ({ params: p, data: d, path: pv }: UseAxiosRequestConfig): Promise<AxiosResponse<T>> => {
             const c = { ...config, params: p, data: d, path: pv }
             const resuest = server.request({ ...c, cancelToken: cancelToken.token })
 
@@ -67,7 +67,7 @@ export function createAxios(config: UseAxiosInstance) {
         }
 
         // 防抖请求
-        const request = (config: UseAxiosRequestConfig): Promise<AxiosResponse> => {
+        const request = (config: UseAxiosRequestConfig): Promise<AxiosResponse<T>> => {
             return new Promise((resolve, reject) => {
                 const _debounce = debounce<Promise<AxiosResponse>>(preRequest, delay, (response) => {
                     response.then(resolve)
