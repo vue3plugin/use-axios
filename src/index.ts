@@ -2,7 +2,7 @@ import axios, { InternalAxiosRequestConfig } from "axios"
 import type { AxiosError, AxiosResponse, CancelTokenSource } from "axios"
 import { ref, shallowRef, computed, unref, watchEffect } from 'vue';
 import { debounce } from 'howtools';
-import  { UseAxiosRequestConfig, UseExRequestOptions, UseDownLoadExRequestOptions, UseAxiosInstance } from "./types/use";
+import { UseAxiosRequestConfig, UseExRequestOptions, UseDownLoadExRequestOptions, UseAxiosInstance } from "./types/use";
 import { useResponseBlobDownLoad } from './help/download';
 
 export { HttpStatus } from "./help/http"
@@ -49,19 +49,21 @@ export function createAxios(config: UseAxiosInstance) {
         const edata = ref() // axios 错误响应数据
 
         // 不是节流的方式
-        const preRequest = ({ params: p, data: d, path: pv }: UseAxiosRequestConfig) => {
+        const preRequest = ({ params: p, data: d, path: pv }: UseAxiosRequestConfig): Promise<AxiosResponse> => {
             const c = { ...config, params: p, data: d, path: pv }
-            return server.request({ ...c, cancelToken: cancelToken.token })
-                .then(r => {
-                    response.value = r
-                    data.value = r.data
-                    loading(false)
-                })
-                .catch((e: AxiosError) => {
+            const resuest = server.request({ ...c, cancelToken: cancelToken.token })
+
+            resuest.then(r => {
+                response.value = r
+                data.value = r.data
+                loading(false)
+            }).catch((e: AxiosError) => {
                     error.value = e
                     edata.value = e.response ? e.response.data : ""
                     loading(false)
                 })
+
+            return resuest
         }
 
         // 防抖请求
