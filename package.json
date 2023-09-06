@@ -1,18 +1,18 @@
 {
   "name": "@v3p/use-axios",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "基于vue3和axios的响应式api请求库",
   "type": "module",
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
       "types": "./dist/index.d.ts"
     }
   },
