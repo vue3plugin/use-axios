@@ -4,7 +4,9 @@ import { ref, shallowRef, computed, unref, watchEffect } from 'vue';
 import { debounce } from 'howtools';
 import  { UseAxiosRequestConfig, UseExRequestOptions, UseDownLoadExRequestOptions, UseAxiosInstance } from "./types/use";
 import { useResponseBlobDownLoad } from './help/download';
+
 export { HttpStatus } from "./help/http"
+export type { UseAxiosRequestConfig, UseExRequestOptions, UseDownLoadExRequestOptions, UseAxiosInstance }
 
 export function createAxios(config: UseAxiosInstance) {
     const server = axios.create(config);
