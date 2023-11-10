@@ -37,20 +37,27 @@ const { response, data, error, edata, execute, aborted, abort, finished, loading
   defaultVal: "",
   immediate: false,
   delay: 100,
-  isDebounce: false,
+  isDebounce: true,
 });
 
 onMounted(() => {
   execute({
     data: {},
     params: {},
+    path: {
+      name: 124
+    },
+  })
+  execute({
+    data: {},
+    params: {},
     path: {},
   })
-})
-execute({
-  path: {
-    name: "yigechengzi"
-  }
+  execute({
+    data: {},
+    params: {},
+    path: {},
+  })
 })
 
 

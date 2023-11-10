@@ -58,21 +58,24 @@ export function createAxios(config: UseAxiosInstance) {
                 data.value = r.data
                 loading(false)
             }).catch((e: AxiosError) => {
-                    error.value = e
-                    edata.value = e.response ? e.response.data : ""
-                    loading(false)
-                })
+                error.value = e
+                edata.value = e.response ? e.response.data : ""
+                loading(false)
+            })
 
             return resuest
         }
 
+        let _debounce: (...args: unknown[]) => void  // 是否已经创建防抖实例，如果创建，则不会再次创建
         // 防抖请求
         const request = (config: UseAxiosRequestConfig): Promise<AxiosResponse<T>> => {
             return new Promise((resolve, reject) => {
-                const _debounce = debounce<Promise<AxiosResponse>>(preRequest, delay, (response) => {
-                    response.then(resolve)
-                    response.catch(reject)
-                })
+                if (!_debounce) {
+                    _debounce = debounce<Promise<AxiosResponse>>(preRequest, delay, (response) => {
+                        response.then(resolve)
+                        response.catch(reject)
+                    })
+                }
                 _debounce(config)
             })
         }
