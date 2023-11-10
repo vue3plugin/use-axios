@@ -1,6 +1,6 @@
 {
   "name": "@v3p/use-axios",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "基于vue3和axios的响应式api请求库",
   "type": "module",
   "files": [
