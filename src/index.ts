@@ -1,9 +1,9 @@
 import axios, { InternalAxiosRequestConfig } from "axios"
 import type { AxiosError, AxiosResponse, CancelTokenSource } from "axios"
 import { ref, shallowRef, computed, unref, watchEffect } from 'vue';
-import { debounce } from 'howtools';
 import { UseAxiosRequestConfig, UseExRequestOptions, UseDownLoadExRequestOptions, UseAxiosInstance } from "./types/use";
 import { useResponseBlobDownLoad } from './help/download';
+import { isObject } from "howtools";
 
 export { HttpStatus } from "./help/http"
 export type { UseAxiosRequestConfig, UseExRequestOptions, UseDownLoadExRequestOptions, UseAxiosInstance }
@@ -51,6 +51,17 @@ export function createAxios(config: UseAxiosInstance) {
         // 不是节流的方式
         const preRequest = ({ params: p, data: d, path: pv }: UseAxiosRequestConfig): Promise<AxiosResponse<T>> => {
             const c = { ...config, params: p, data: d, path: pv }
+
+            // 替换url上边的空格
+            config.url = config.url?.replace(/ /g, "")
+
+            // 判断路径参数是否是一个
+            if (isObject(pv)) {
+                for (const [key, value] of Object.entries(pv)) {
+                    config.url = config.url?.replace(`{${key}}`, value)
+                }
+            }
+            
             const resuest = server.request({ ...c, cancelToken: cancelToken.token })
 
             resuest.then(r => {
@@ -66,18 +77,21 @@ export function createAxios(config: UseAxiosInstance) {
             return resuest
         }
 
-        let _debounce: (...args: unknown[]) => void  // 是否已经创建防抖实例，如果创建，则不会再次创建
+        let _is_requested = false  // 是否已经创建防抖实例，如果创建，则不会再次创建
         // 防抖请求
         const request = (config: UseAxiosRequestConfig): Promise<AxiosResponse<T>> => {
-            return new Promise((resolve, reject) => {
-                if (!_debounce) {
-                    _debounce = debounce<Promise<AxiosResponse>>(preRequest, delay, (response) => {
-                        response.then(resolve)
-                        response.catch(reject)
-                    })
-                }
-                _debounce(config)
-            })
+            if (!_is_requested) {
+                _is_requested = true
+
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        preRequest(config).then(resolve).catch(reject)
+                        _is_requested = false
+                    }, delay);
+                })
+            } else {
+                return Promise.reject(unref(error))
+            }
         }
 
         const execute = (config: Pick<UseAxiosRequestConfig, 'params' | 'data' | 'path'> = { params: {}, data: {}, path: {} }) => {
