@@ -21,7 +21,7 @@
     "build:demo": "cd example && vite build",
     "build": "vite build",
     "build-types": "vue-tsc -p ./tsconfig.types.json && api-extractor run -c api-extractor.json && node scripts/cleanup.js",
-    "build-all": "npm run build && npm run build-types"
+    "build-all": "npm run build && npm run build-types && npm version patch && npm publish --access public"
   },
   "keywords": [
     "一个橙子pro",
